@@ -1,0 +1,11 @@
+##############################################################################
+{{ "PFC - Víctor Nieto Castán" | to_banner }}
+{{ inventory_hostname | to_banner }}
+- OS: {{ ansible_lsb.description }} {{ ansible_architecture }}
+- Kernel: {{ ansible_kernel }}
+- CPU: {{ ansible_processor_cores }} x {{ ansible_processor[1] }}
+- Mem: {{ ansible_memtotal_mb }} MB
+- IP: {% for ip in ansible_all_ipv4_addresses %} {{ ip }} {% endfor %}
+
+- Roles: {%  for group in group_names %} {{ group }} {% endfor %}
+

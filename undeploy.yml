@@ -1,0 +1,16 @@
+---
+- hosts: all
+  tasks:
+    - yum:
+        name={{ item }}
+        state=absent
+      with_items:
+        - graphite-web
+        - python-memcached
+        - python-whisper
+        - python-carbon
+        - python-ldap
+        - httpd
+        - memcached
+        - haproxy
+        - diamond

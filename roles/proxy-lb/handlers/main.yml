@@ -1,0 +1,15 @@
+---
+- name: reiniciar memcached
+  service:
+    name=memcached
+    state=restarted
+
+- name: reiniciar haproxy
+  service:
+    name=haproxy
+    state=restarted
+
+- name: reiniciar carbon-relay
+  service:
+    name=carbon-relay
+    state=restarted

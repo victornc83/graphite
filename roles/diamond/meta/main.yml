@@ -1,0 +1,9 @@
+---
+galaxy_info:
+  author: Víctor Manuel Nieto Castán
+  description: Rol encargado de la instalación y configuración del agente Diamond
+  company: PFC
+  license: license (GPLv2, CC-BY, etc)
+  min_ansible_version: 1.2
+dependencies:
+  - common

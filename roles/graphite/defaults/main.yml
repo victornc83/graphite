@@ -1,0 +1,35 @@
+---
+graphite_pkgs:
+  - graphite-web
+  - python-memcached
+  - python-whisper
+  - python-carbon
+  - python-ldap
+  - httpd
+
+secret_key: 'm8bw3r+d^9fzdx#cbvyl060mpg+dj&i1=@6!zf)%ai8%&^bg*j'
+
+memcached_pool: []
+
+carbon_port_a:
+  line: 2103
+  pickle: 2104
+  cache: 7102
+
+carbon_port_b:
+  line: 2203
+  pickle: 2204
+  cache: 7202
+
+relay_port:
+  line: 2013
+  pickle: 2014
+relay_replication_factor: 1
+relay_method: 'consistent-hashing'
+
+aggregator_port:
+  line: 2023
+  pickle: 2024
+aggregator_replication_factor: 1
+
+time_zone: 'Europe/Madrid'

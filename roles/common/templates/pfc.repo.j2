@@ -1,0 +1,7 @@
+[pfc-repo]
+name=PFC local repository
+baseurl={{ repo_url }}/{{ ansible_distribution|lower }}/{{ ansible_lsb.major_release }}/
+enabled=1
+priority=1
+gpgcheck=0
+proxy={{ repo_proxy }}

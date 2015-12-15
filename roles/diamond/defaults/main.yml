@@ -1,0 +1,27 @@
+---
+
+collectors:
+    common:
+        - FilestatCollector.conf
+        - InterruptCollector.conf
+        - NetworkCollector.conf
+        - NtpdCollector.conf
+        - ProcessStatCollector.conf
+        - SockstatCollector.conf
+        - SoftInterruptCollector.conf
+        - TCPCollector.conf
+        - UDPCollector.conf
+        - MemoryCollector.conf
+
+diamond_dependencies:
+    common:
+        - lm_sensors-libs
+        - lsof
+        - net-snmp
+        - net-snmp-libs
+        - psutil
+        - pysnmp
+        - python-pyasn1
+        - python-configobj
+
+httpd_process: '^\/usr\/sbin\/httpd'

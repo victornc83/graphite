@@ -1,0 +1,48 @@
+---
+- name: Instalando paquetes LB
+  yum:
+    name={{ item }}
+    disablerepo=*
+    enablerepo=pfc-repo
+    state=latest
+  with_items: lb_pkgs
+
+- name: Configurando Memcached
+  template:
+    src=memcached.conf.j2
+    dest=/etc/sysconfig/memcached
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: reiniciar memcached
+
+- name: configurando carbon-relay
+  template:
+    src=carbon.conf.j2
+    dest=/etc/carbon/carbon.conf
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: reiniciar carbon-relay
+
+- name: Configurando haproxy
+  template:
+    src=haproxy.cfg.j2
+    dest=/etc/haproxy/haproxy.cfg
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: reiniciar haproxy
+
+- name: Chequeando servicios LB
+  service:
+    name={{ item }}
+    state=started
+    enabled=yes
+  with_items:
+    - carbon-relay
+    - memcached
+    - haproxy

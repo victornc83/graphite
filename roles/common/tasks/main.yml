@@ -1,0 +1,33 @@
+---
+
+- name: Set hostname
+  hostname:
+    name={{ inventory_hostname }}
+
+- name: Set official repository
+  template:
+    src=pfc.repo.j2
+    dest=/etc/yum.repos.d/pfc.repo
+    owner=root
+    group=root
+    mode=0644
+
+- name: SSHd settings
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp='^PrintMotd.*'
+    insertafter='^#PrintMotd.*'
+    line='PrintMotd yes'
+  with_items:
+    - { regexp: '^PrintMotd.*', insertafter: '^#PrintMotd.*', line: 'PrintMotd yes' }
+    - { regexp: '^UseDNS.*', insertafter: '^#UseDNS.*', line: 'UseDNS no' }
+    - { regexp: '^GSSAPIAuthentication.*', insertafter: '^#GSSAPIAuthentication.*', line: 'GSSAPIAuthentication no' }
+  notify: restart sshd
+
+- name: Enabling banner
+  template:
+    src=motd.j2
+    dest=/etc/motd
+    owner=root
+    group=root
+    mode=0644

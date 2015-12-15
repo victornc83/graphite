@@ -1,0 +1,9 @@
+[lb]
+centos01.pfc.vm
+
+[graphite]
+centos02.pfc.vm
+centos03.pfc.vm
+
+[servers]
+centos04.pfc.vm

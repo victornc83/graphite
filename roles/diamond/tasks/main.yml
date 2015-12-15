@@ -1,0 +1,31 @@
+---
+- name: Instalando diamond
+  yum: name=diamond
+       state=present
+       disablerepo=*
+       enablerepo=pfc-repo
+
+- name: Instanlando dependencias
+  yum: name={{ item }}
+       state=present
+       disablerepo=*
+       enablerepo=connect
+  with_items: diamond_dependencies['common']
+
+- name: Copiando configuración
+  template: src=diamond.conf.j2
+            dest=/etc/diamond/diamond.conf
+            owner=root
+            group=root
+  notify: restart diamond
+
+- name: Copiar configuracion de colectores
+  copy: dest=/etc/diamond/collectors/{{item}}
+        src=collectors/{{item}}
+  with_items: collectors['common']
+  notify: restart diamond
+
+- name: Configure diamond service
+  service: name=diamond
+           enabled=yes
+  when: config_diamond

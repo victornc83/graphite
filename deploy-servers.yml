@@ -1,0 +1,9 @@
+---
+
+- hosts: graphite
+  roles:
+   - graphite
+
+- hosts: lb
+  roles:
+    - proxy-lb

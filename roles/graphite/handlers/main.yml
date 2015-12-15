@@ -1,0 +1,14 @@
+---
+- name: reiniciar apache
+  service:
+    name=httpd
+    state=restarted
+
+- name: reiniciar carbon
+  service:
+    name={{ item }}
+    state=restarted
+  with_items:
+    - carbon-cache
+    - carbon-relay
+    - carbon-aggregator

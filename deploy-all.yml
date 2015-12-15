@@ -1,0 +1,12 @@
+---
+- hosts: lb
+  roles:
+   - proxy-lb
+
+- hosts: graphite
+  roles:
+    - graphite
+
+- hosts: servers
+  roles:
+    - diamond

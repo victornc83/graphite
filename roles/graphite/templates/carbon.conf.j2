@@ -1,0 +1,84 @@
+[cache]
+STORAGE_DIR    = /var/lib/carbon/
+LOCAL_DATA_DIR = /var/lib/carbon/whisper/
+WHITELISTS_DIR = /var/lib/carbon/lists/
+CONF_DIR       = /etc/carbon/
+LOG_DIR        = /var/log/carbon/
+PID_DIR        = /var/run/
+
+ENABLE_LOGROTATION = True
+USER = carbon
+MAX_CACHE_SIZE = inf
+MAX_UPDATES_PER_SECOND = 500
+MAX_CREATES_PER_MINUTE = 50
+
+LINE_RECEIVER_INTERFACE = 0.0.0.0
+LINE_RECEIVER_PORT = {{ carbon_port_a.line }}
+ENABLE_UDP_LISTENER = False
+
+UDP_RECEIVER_INTERFACE = 0.0.0.0
+UDP_RECEIVER_PORT = {{ carbon_port_a.line }}
+
+PICKLE_RECEIVER_INTERFACE = 0.0.0.0
+PICKLE_RECEIVER_PORT = {{ carbon_port_a.pickle }}
+
+LOG_LISTENER_CONNECTIONS = True
+USE_INSECURE_UNPICKLER = False
+
+CACHE_QUERY_INTERFACE = 0.0.0.0
+CACHE_QUERY_PORT = {{ carbon_port_a.cache }}
+
+USE_FLOW_CONTROL = True
+LOG_UPDATES = False
+LOG_CACHE_HITS = False
+LOG_CACHE_QUEUE_SORTS = True
+CACHE_WRITE_STRATEGY = sorted
+WHISPER_AUTOFLUSH = False
+WHISPER_FALLOCATE_CREATE = True
+
+[cache:b]
+LINE_RECEIVER_PORT = {{ carbon_port_b.line }}
+UDP_RECEIVER_PORT = {{ carbon_port_b.line }}
+PICKLE_RECEIVER_PORT = {{ carbon_port_b.pickle }}
+CACHE_QUERY_PORT = {{ carbon_port_b.cache }}
+
+[relay]
+USER = carbon
+LINE_RECEIVER_INTERFACE = 0.0.0.0
+LINE_RECEIVER_PORT = {{ relay_port.line }}
+PICKLE_RECEIVER_INTERFACE = 0.0.0.0
+PICKLE_RECEIVER_PORT = {{ relay_port.pickle }}
+
+LOG_LISTENER_CONNECTIONS = True
+RELAY_METHOD = {{ relay_method }}
+
+REPLICATION_FACTOR = {{ relay_replication_factor }}
+
+DESTINATIONS = 127.0.0.1:{{ carbon_port_a.pickle }}:a, 127.0.0.1:{{ carbon_port_b.pickle }}:b
+
+#DESTINATIONS = {% for host in groups['graphite'] %}
+#   {{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:{{ carbon_port_a.pickle }}:a, {{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:{{ carbon_port_b.pickle }}:b,
+#{% endfor %}
+
+MAX_DATAPOINTS_PER_MESSAGE = 500
+MAX_QUEUE_SIZE = 10000
+USE_FLOW_CONTROL = True
+
+[aggregator]
+USER = carbon
+LINE_RECEIVER_INTERFACE = 0.0.0.0
+LINE_RECEIVER_PORT = {{ aggregator_port.line }}
+
+PICKLE_RECEIVER_INTERFACE = 0.0.0.0
+PICKLE_RECEIVER_PORT = {{ aggregator_port.pickle }}
+
+LOG_LISTENER_CONNECTIONS = True
+FORWARD_ALL = True
+
+DESTINATIONS = 127.0.0.1:{{ carbon_port_a.pickle }}:a, 127.0.0.1:{{ carbon_port_b.pickle }}:b
+
+REPLICATION_FACTOR = {{ aggregator_replication_factor }}
+MAX_QUEUE_SIZE = 10000
+USE_FLOW_CONTROL = True
+MAX_DATAPOINTS_PER_MESSAGE = 500
+MAX_AGGREGATION_INTERVALS = 5

@@ -1,0 +1,17 @@
+[relay]
+USER = carbon
+LINE_RECEIVER_INTERFACE = 0.0.0.0
+LINE_RECEIVER_PORT = {{ relay_port.line }}
+PICKLE_RECEIVER_INTERFACE = 0.0.0.0
+PICKLE_RECEIVER_PORT = {{ relay_port.pickle }}
+
+LOG_LISTENER_CONNECTIONS = True
+RELAY_METHOD = {{ relay_method }}
+
+REPLICATION_FACTOR = {{ relay_replication_factor }}
+
+DESTINATIONS = [{% for host in groups.graphite %}{{ host }}:{{graphite_port.pickle}}, {% endfor %}]
+
+MAX_DATAPOINTS_PER_MESSAGE = 500
+MAX_QUEUE_SIZE = 10000
+USE_FLOW_CONTROL = True
