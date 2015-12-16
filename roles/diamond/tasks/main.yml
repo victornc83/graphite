@@ -9,7 +9,7 @@
   yum: name={{ item }}
        state=present
        disablerepo=*
-       enablerepo=connect
+       enablerepo=pfc-repo
   with_items: diamond_dependencies['common']
 
 - name: Copiando configuración
@@ -28,4 +28,3 @@
 - name: Configure diamond service
   service: name=diamond
            enabled=yes
-  when: config_diamond
