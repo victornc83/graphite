@@ -19,7 +19,7 @@ diamond_dependencies:
         - lsof
         - net-snmp
         - net-snmp-libs
-        - psutil
+        - python-psutil
         - pysnmp
         - python-pyasn1
         - python-configobj
