@@ -14,7 +14,9 @@ DATA_DIRS = [WHISPER_DIR, RRD_DIR] # Default: set from the above variables
 LOG_DIR = '/var/log/graphite-web/'
 INDEX_FILE = '/var/lib/graphite-web/index'  # Search index file
 
-MEMCACHE_HOSTS = [{% for host in groups.lb %}'{{ host }}:11211',{%endfor%}]
+#MEMCACHE_HOSTS = [{% for host in groups.lb %}'{{ host }}:11211',{%endfor%}]
+MEMCACHE_HOSTS = [{% for host in groups.lb %}'{{ hostvars[host]['ansible_default_ipv4'][address] }}:11211',{%endfor%}]
 REMOTE_RENDERING = False
 CARBONLINK_HOSTS = ["127.0.0.1:{{ carbon_port_a.cache }}:a", "127.0.0.1:{{ carbon_port_b.cache }}:b"]
-CLUSTER=[{% for host in groups['graphite'] %}{% if host != ansible_fqdn %}"{{ hostvars[host]['ansible_fqdn'] }}",{% endif %}{% endfor %}]
+#CLUSTER=[{% for host in groups['graphite'] %}{% if host != ansible_fqdn %}"{{ hostvars[host]['ansible_fqdn'] }}",{% endif %}{% endfor %}]
+CLUSTER=[{% for host in groups['graphite'] %}{% if host != ansible_fqdn %}"{{ hostvars[host]['ansible_default_ipv4'][address] }}",{% endif %}{% endfor %}]
