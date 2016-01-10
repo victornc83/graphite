@@ -1,9 +1,5 @@
 ---
 
 - hosts: servers
-  pre_tasks:
-    - name: "Actualizando cache"
-      shell: "yum clean all; yum makecache --disablerepo=* --enablerepo=pfc-repo"
-      changed_when: false
   roles:
    - diamond

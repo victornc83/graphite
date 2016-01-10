@@ -12,6 +12,10 @@
     group=root
     mode=0644
 
+- name: "Actualizando cache"
+  shell: "yum clean all; yum makecache --disablerepo=* --enablerepo=pfc-repo"
+  changed_when: false
+
 - name: SSHd settings
   lineinfile:
     dest=/etc/ssh/sshd_config
