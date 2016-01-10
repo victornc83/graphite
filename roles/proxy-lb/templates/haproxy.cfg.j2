@@ -34,5 +34,5 @@ frontend  proxyweb *:80
 backend webapp
     balance     roundrobin
     {% for host in groups.graphite %}
-    server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host].ansible_default_ipv4.address }}:80 check
+    server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host].ansible_ssh_host }}:80 check
     {% endfor %}
