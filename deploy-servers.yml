@@ -1,9 +1,17 @@
 ---
 
 - hosts: graphite
+  pre_tasks:
+    - name: "Actualizando cache"
+      shell: "yum clean all; yum makecache --disablerepo=* --enablerepo=pfc-repo"
+      changed_when: false
   roles:
    - graphite
 
 - hosts: lb
+  pre_tasks:
+    - name: "Actualizando cache"
+      shell: "yum clean all; yum makecache --disablerepo=* --enablerepo=pfc-repo"
+      changed_when: false
   roles:
     - proxy-lb
