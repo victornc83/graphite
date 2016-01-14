@@ -5,11 +5,18 @@ graphite_pkgs:
   - python-whisper
   - python-carbon
   - python-ldap
+  - memcached
   - httpd
 
 secret_key: 'm8bw3r+d^9fzdx#cbvyl060mpg+dj&i1=@6!zf)%ai8%&^bg*j'
 
 memcached_pool: []
+memcached_port: 11211
+memcached_listen_ip: 0.0.0.0
+memcached_memory_limit: 64
+memcached_connections: 1024
+memcached_log_file: /var/log/memcached.log
+memcached_log_verbosity: ""
 
 carbon_port_a:
   line: 2103

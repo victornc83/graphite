@@ -1,9 +1,9 @@
 [lb]
-centos01.pfc.vm
+centos01.pfc.vm ansible_ssh_host=172.28.128.6
 
 [graphite]
-centos02.pfc.vm
-centos03.pfc.vm
+centos02.pfc.vm ansible_ssh_host=172.28.128.5
+centos03.pfc.vm ansible_ssh_host=172.28.128.7
 
 [servers]
 centos04.pfc.vm

@@ -32,6 +32,7 @@ frontend  proxyweb *:80
     default_backend             webapp
 
 backend webapp
-    balance     roundrobin
-    server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['ansible_fqdn'] }}:80 check
+    balance source
+    hash-type consistent
+    {% for host in groups.graphite %}server {{ hostvars[host].inventory_hostname }} {{ hostvars[host].ansible_ssh_host }}:80 check
     {% endfor %}

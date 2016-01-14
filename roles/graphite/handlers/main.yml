@@ -12,3 +12,8 @@
     - carbon-cache
     - carbon-relay
     - carbon-aggregator
+
+ name: reiniciar memcached
++  service:
++    name=memcached
++    state=restarted

@@ -14,3 +14,9 @@
         - memcached
         - haproxy
         - diamond
+
+    - command: /bin/echo "/dev/null" > /etc/motd
+
+    - file:
+        path=/etc/yum.repos.d/pfc.repo
+        state=absent
