@@ -2,6 +2,8 @@ SECRET_KEY = '{{ secret_key }}'
 ALLOWED_HOSTS = [ '*' ]
 TIME_ZONE = '{{ time_zone }}'
 
+DEBUG = False
+
 GRAPHITE_ROOT = '/usr/share/graphite'
 
 CONF_DIR = '/etc/graphite-web'
@@ -14,9 +16,8 @@ DATA_DIRS = [WHISPER_DIR, RRD_DIR] # Default: set from the above variables
 LOG_DIR = '/var/log/graphite-web/'
 INDEX_FILE = '/var/lib/graphite-web/index'  # Search index file
 
-#MEMCACHE_HOSTS = [{% for host in groups.lb %}'{{ host }}:11211',{%endfor%}]
-MEMCACHE_HOSTS = [{% for host in groups.lb %}'{{ hostvars[host].ansible_ssh_host }}:11211',{%endfor%}]
+#MEMCACHE_HOSTS = [{% for host in groups.lb %}'{{ hostvars[host].ansible_ssh_host }}:11211',{%endfor%}]
+MEMCACHE_HOSTS = ['{{ hostvars[groups.lb[0]].ansible_ssh_host }}:11211',{% set coma = joiner(",") %}{% for host in groups.graphite %}{{ coma() }}'{{ hostvars[host].ansible_ssh_host }}:11211'{%endfor%}]
 REMOTE_RENDERING = False
 CARBONLINK_HOSTS = ["127.0.0.1:{{ carbon_port_a.cache }}:a", "127.0.0.1:{{ carbon_port_b.cache }}:b"]
-#CLUSTER=[{% for host in groups['graphite'] %}{% if host != ansible_fqdn %}"{{ hostvars[host]['ansible_fqdn'] }}",{% endif %}{% endfor %}]
-CLUSTER=[{% set coma = joiner(",") %}{% for host in groups.graphite %}{% if host != ansible_fqdn %}"{{ coma() }}{{ hostvars[host].ansible_ssh_host }}"{% endif %}{% endfor %}]
+CLUSTER_SERVERS=[{% set coma = joiner(",") %}{% for host in groups.graphite %}{% if host != ansible_fqdn %}{{ coma() }}"{{ hostvars[host].ansible_ssh_host }}"{% endif %}{% endfor %}]

@@ -17,6 +17,16 @@
     backup=yes
   notify: reiniciar carbon
 
+- name: Configurando Memcached
+  template:
+    src=memcached.conf.j2
+    dest=/etc/sysconfig/memcached
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: reiniciar memcached
+
 - name: Aplicando configuración local_settings.py
   template:
     src=local_settings.py.j2
@@ -66,4 +76,5 @@
   with_items:
     - carbon-cache
     - carbon-relay
+    - memcached
     - httpd
