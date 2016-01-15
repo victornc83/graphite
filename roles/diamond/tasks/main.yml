@@ -28,3 +28,4 @@
 - name: Configure diamond service
   service: name=diamond
            enabled=yes
+           state=started
