@@ -1,0 +1,4 @@
+[main]
+DESTINATIONS = {% set coma = joiner(",") %}{% for host in groups.graphite %}{{ coma() }}{{ hostvars[host].ansible_ssh_host }}{% endfor %}
+REPLICATION_FACTOR = {{ replication_factor }}
+SSH_USER = carbon
