@@ -14,7 +14,7 @@ memcached_log_verbosity: ""
 relay_port:
   line: 2003
   pickle: 2004
-relay_replication_factor: 2
+relay_replication_factor: {{ replication_factor }}
 relay_method: 'consistent-hashing'
 
 graphite_port:
