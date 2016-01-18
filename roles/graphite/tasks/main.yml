@@ -7,6 +7,31 @@
     state=latest
   with_items: graphite_pkgs
 
+- name: Configurando usuario Carbon
+  user:
+    name=carbon
+    shell=/bin/bash
+
+- name: Preparando directorio Carbon
+  file:
+    dest=$HOME/.ssh
+    state=directory
+    mode=0700
+  become_user: carbon
+
+- name: Copiando claves para el usuario Carbon
+  copy:
+    src=carbon_keys/carbon_id_rsa
+    dest=$HOME/.ssh/id_rsa
+    mode=0600
+  become_user: carbon
+
+- name: Autorizando claves publicas
+  authorized_keys:
+    user=carbon
+    key="{{ lookup('file', 'carbon_keys/carbon_id_rsa.pub') }}"
+    state=present
+
 - name: Aplicando configuración /etc/carbon/carbon.conf
   template:
     src=carbon.conf.j2
