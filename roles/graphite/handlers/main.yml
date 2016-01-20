@@ -17,3 +17,6 @@
   service:
     name=memcached
     state=restarted
+
+- name: borrar metricas incorrectas
+  command: pendiente.sh

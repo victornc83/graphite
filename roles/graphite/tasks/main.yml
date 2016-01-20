@@ -6,6 +6,18 @@
     enablerepo=pfc-repo
     state=latest
   with_items: graphite_pkgs
+  register: paquetes
+
+- name: Copiando scripts de mantenimiento del cluster
+  copy:
+    src={{ item }}
+    dest=/usr/bin/{{ item }}
+    mode=0755
+    owner=root
+    group=root
+  with_items:
+    - scripts/graphite-rebalance.sh
+    - scripts/graphite-sync.sh
 
 - name: Configurando usuario Carbon
   user:
@@ -71,6 +83,26 @@
     mode=0644
     backup=yes
   notify: reiniciar apache
+
+- name: Configurando carbonate.conf
+  template:
+    src=carbonate.conf.j2
+    dest=/etc/carbonate.conf
+    owner=root
+    group=root
+    moder=0644
+    backup=yes
+  register: nuevaconf
+
+- name: Resincronizando nodo
+  shell: /usr/bin/graphite-sync.sh {{ ansible_ssh_host }} >> /var/log/graphite-sync.log
+  when: paquetes.changed
+  notify: borrar metricas incorrectas
+
+- name: Balanceando cluster
+  shell: /usr/bin/graphite-rebalance.sh {{ ansible_ssh_host }} {{ nuevaconf.backup_file | quote }} >> /var/log/graphite-rebalance.log
+  when: '{{ nuevaconf.backup_file is defined }}'
+  notify: borrar metricas incorrectas
 
 - name: Verificando base de datos
   django_manage:
