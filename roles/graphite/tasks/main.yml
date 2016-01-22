@@ -90,7 +90,7 @@
     dest=/etc/carbonate.conf
     owner=root
     group=root
-    moder=0644
+    mode=0644
     backup=yes
   register: nuevaconf
 
@@ -101,7 +101,7 @@
 
 - name: Balanceando cluster
   shell: /usr/bin/graphite-rebalance.sh {{ ansible_ssh_host }} {{ nuevaconf.backup_file | quote }} >> /var/log/graphite-rebalance.log
-  when: '{{ nuevaconf.backup_file is defined }}'
+  when: nuevaconf.backup_file is defined
   notify: borrar metricas incorrectas
 
 - name: Verificando base de datos
