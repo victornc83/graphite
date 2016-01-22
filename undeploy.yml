@@ -22,3 +22,20 @@
       with_items:
         - /etc/yum.repos.d/pfc.repo
         - /etc/motd
+
+    - file:
+        path={{ item }}
+        state=absent
+        recurse=yes
+      with_items:
+        - /var/lib/mysql
+        - /var/lib/carbon
+
+    - user:
+        name={{ item }}
+        state=absent
+        remove=yes
+      with_items:
+        - carbon
+        - httpd
+        - mysql
