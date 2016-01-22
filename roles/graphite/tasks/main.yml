@@ -18,6 +18,7 @@
   with_items:
     - graphite-rebalance.sh
     - graphite-sync.sh
+    - graphite-purge.sh
 
 - name: Configurando usuario Carbon
   user:

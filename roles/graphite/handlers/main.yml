@@ -19,4 +19,4 @@
     state=restarted
 
 - name: borrar metricas incorrectas
-  command: pendiente.sh
+  command: /usr/bin/graphite-purge {{ ansible_ssh_host }}
