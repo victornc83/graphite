@@ -30,12 +30,3 @@
       with_items:
         - /var/lib/mysql
         - /var/lib/carbon
-
-    - user:
-        name={{ item }}
-        state=absent
-        remove=yes
-      with_items:
-        - carbon
-        - httpd
-        - mysql
