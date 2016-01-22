@@ -28,6 +28,13 @@
     - { regexp: '^GSSAPIAuthentication.*', insertafter: '^#GSSAPIAuthentication.*', line: 'GSSAPIAuthentication no' }
   notify: restart sshd
 
+- name: SSH settings
+  lineinfile:
+    dest=/etc/ssh/ssh_config
+    regexp='^StrictHostKeyChecking no'
+    insertafter='^#.*StrictHostKeyChecking ask'
+    line='StrictHostKeyChecking no'
+
 - name: Enabling banner
   template:
     src=motd.j2
