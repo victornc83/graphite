@@ -76,7 +76,7 @@
 
 - name: Aplicando configuración virtualhost
   copy:
-    src=graphite-web.conf.j2
+    src=graphite-web.conf
     dest=/etc/httpd/conf.d/graphite-web.conf
     owner=root
     group=root
