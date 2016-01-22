@@ -3,7 +3,8 @@ myvm01  ansible_ssh_host=172.29.58.201
 
 [graphite]
 myvm02  ansible_ssh_host=172.29.58.202
-myvm03  ansible_ssh_host=172.29.58.244
+myvm03  ansible_ssh_host=172.29.58.243
+myvm04  ansible_ssh_host=172.29.58.235
 
 [servers]
-myvm04  ansible_ssh_host=172.29.58.246
+myvm05  ansible_ssh_host=172.29.58.246
