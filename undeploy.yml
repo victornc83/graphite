@@ -15,6 +15,9 @@
         - haproxy
         - carbonate
         - diamond
+        - mysql-server
+        - mysql
+        - MySQL-python
 
     - file:
         path={{ item }}
