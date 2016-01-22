@@ -28,6 +28,7 @@
     name=root
     password={{ db_root_pass }}
     priv=*.*:ALL,GRANT
+  ignore_erros: true
 
 - name: Eliminando base de datos de test
   mysql_db:
