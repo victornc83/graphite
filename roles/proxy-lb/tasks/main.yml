@@ -31,11 +31,15 @@
 
 - name: Eliminando base de datos de test
   mysql_db:
+    login_user=root
+    login_password={{ db_root_pass }}
     db=test
     state=absent
 
 - name: Creando base de datos Graphite
   mysql_db:
+    login_user=root
+    login_password={{ db_root_pass }}
     db={{ db_name }}
     state=present
     collation=utf8_general_ci
@@ -43,6 +47,8 @@
 
 - name: Creación de usuario graphite
   mysql_user:
+    login_user=root
+    login_password={{ db_root_pass }}
     name={{ db_user }}
     password={{ db_password }}
     priv={{ db_name }}.*:ALL
