@@ -4,12 +4,22 @@
     name=memcached
     state=restarted
 
+- name: reiniciar apache
+  service:
+    name=httpd
+    state=restarted
+
 - name: reiniciar haproxy
   service:
     name=haproxy
-    state=restarted
+    state=stopped
 
 - name: reiniciar carbon-relay
   service:
     name=carbon-relay
+    state=restarted
+
+- name: reiniciar mysqld
+  service:
+    name=mysqld
     state=restarted

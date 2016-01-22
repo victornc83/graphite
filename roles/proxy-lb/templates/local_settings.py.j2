@@ -1,0 +1,24 @@
+SECRET_KEY = '{{ secret_key }}'
+ALLOWED_HOSTS = [ '*' ]
+TIME_ZONE = '{{ time_zone }}'
+
+DEBUG = False
+
+DATABASES = {
+  'default': {
+  'NAME': '{{ db_name }}',
+  'ENGINE': 'django.db.backends.mysql',
+  'USER': '{{ db_user }}',
+  'PASSWORD': '{{ db_password }}',
+  }
+}
+
+GRAPHITE_ROOT = '/usr/share/graphite'
+CONF_DIR = '/etc/graphite-web'
+STORAGE_DIR = '/var/lib/graphite-web'
+CONTENT_DIR = '/usr/share/graphite/webapp/content'
+
+LOG_DIR = '/var/log/graphite-web/'
+
+MEMCACHE_HOSTS = ['{{ hostvars[groups.lb[0]].ansible_ssh_host }}:11211',{% set coma = joiner(",") %}{% for host in groups.graphite %}{{ coma() }}'{{ hostvars[host].ansible_ssh_host }}:11211'{%endfor%}]
+CLUSTER_SERVERS=[{% set coma = joiner(",") %}{% for host in groups.graphite %}{{ coma() }}"{{ hostvars[host].ansible_ssh_host }}"{% endif %}{% endfor %}]

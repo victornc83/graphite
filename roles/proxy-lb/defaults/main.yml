@@ -2,8 +2,20 @@
 lb_pkgs:
   - python-carbon
   - memcached
+  - python-memcached
   - haproxy
+  - graphite-web
+  - mysql
+  - mysql-server
+  - MySQL-python
 
+## Variables de MySQL
+db_name: graphite
+db_user: graphite
+db_password: Graphite01
+db_root_pass: x12Fdi8034ujdHJdk8
+
+## Variables MemCached
 memcached_port: 11211
 memcached_listen_ip: 0.0.0.0
 memcached_memory_limit: 64
@@ -11,6 +23,7 @@ memcached_connections: 1024
 memcached_log_file: /var/log/memcached.log
 memcached_log_verbosity: ""
 
+## Variables Carbon-Relay
 relay_port:
   line: 2003
   pickle: 2004
@@ -20,3 +33,7 @@ relay_method: 'consistent-hashing'
 graphite_port:
   line: 2013
   pickle: 2014
+
+## Variables graphite-web
+time_zone: 'Europe/London'
+secret_key: ''

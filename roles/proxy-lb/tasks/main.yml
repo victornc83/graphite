@@ -7,6 +7,39 @@
     state=latest
   with_items: lb_pkgs
 
+- name: Configurando mysql-server
+  template:
+    src=my.cnf.j2
+    dest=/etc/my.cnf
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: reiniciar mysqld
+
+- name: Contraseña de root
+  mysql_user:
+    name=root
+    password={{ db_root_pass }}
+
+- name: Eliminando base de datos de test
+  mysql_db:
+    db=test
+    state=absent
+
+- name: Creando base de datos Graphite
+  mysql_db:
+    db={{ db_name }}
+    state=present
+    collation=utf8_general_ci
+    encoding=utf8
+
+- name: Creación de usuario graphite
+  mysql_user:
+    name={{ db_user }}
+    password={{ db_password }}
+    priv={{ db_name }}.*:ALL
+
 - name: Configurando Memcached
   template:
     src=memcached.conf.j2
@@ -16,6 +49,31 @@
     mode=0644
     backup=yes
   notify: reiniciar memcached
+
+- name: Aplicando configuración local_settings.py
+  template:
+    src=local_settings.py.j2
+    dest=/etc/graphite-web/local_settings.py
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: reiniciar apache
+
+- name: Aplicando configuración virtualhost
+  copy:
+    src=graphite-web.conf.j2
+    dest=/etc/httpd/conf.d/graphite-web.conf
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: reiniciar apache
+
+- name: Verificando base de datos
+  django_manage:
+    app_path=/usr/lib/python2.6/site-packages/graphite/
+    command=syncdb
 
 - name: configurando carbon-relay
   template:
@@ -44,5 +102,6 @@
     enabled=yes
   with_items:
     - carbon-relay
+    - mysqld
     - memcached
-    - haproxy
+    - httpd

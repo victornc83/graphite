@@ -1,2 +1,5 @@
 repo_url: http://192.168.1.176
 repo_proxy: _none_
+replication_factor: 2
+time_zone: 'Europe/Madrid'
+secret_key: 'm8bw3r+d^9fzdx#cbvyl060mpg+dj&i1=@6!zf)%ai8%&^bg*j'

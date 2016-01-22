@@ -9,7 +9,7 @@ graphite_pkgs:
   - httpd
   - carbonate
 
-secret_key: 'm8bw3r+d^9fzdx#cbvyl060mpg+dj&i1=@6!zf)%ai8%&^bg*j'
+secret_key: ''
 
 memcached_pool: []
 memcached_port: 11211
@@ -40,4 +40,4 @@ aggregator_port:
   pickle: 2024
 aggregator_replication_factor: 1
 
-time_zone: 'Europe/Madrid'
+time_zone: 'Europe/London'
