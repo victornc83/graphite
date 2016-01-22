@@ -39,7 +39,7 @@
   become_user: carbon
 
 - name: Autorizando claves publicas
-  authorized_keys:
+  authorized_key:
     user=carbon
     key="{{ lookup('file', 'carbon_keys/carbon_id_rsa.pub') }}"
     state=present
