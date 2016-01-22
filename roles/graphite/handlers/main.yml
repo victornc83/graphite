@@ -19,4 +19,4 @@
     state=restarted
 
 - name: borrar metricas incorrectas
-  command: /usr/bin/graphite-purge {{ ansible_ssh_host }}
+  command: /usr/bin/graphite-purge.sh {{ ansible_ssh_host }}
