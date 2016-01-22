@@ -95,14 +95,21 @@
     backup=yes
   register: nuevaconf
 
+- name: Ruta de logs para carbonate
+  file:
+    path=/var/log/carbonate
+    owner=carbon
+    group=carbon
+    state=directory
+
 - name: Resincronizando nodo
-  shell: /usr/bin/graphite-sync.sh {{ ansible_ssh_host }} >> /var/log/graphite-sync.log
+  shell: /usr/bin/graphite-sync.sh {{ ansible_ssh_host }} >> /var/log/carbonate/graphite-sync.log
   become_user: carbon
   when: paquetes.changed
   notify: borrar metricas incorrectas
 
 - name: Balanceando cluster
-  shell: /usr/bin/graphite-rebalance.sh {{ ansible_ssh_host }} {{ nuevaconf.backup_file | quote }} >> /var/log/graphite-rebalance.log
+  shell: /usr/bin/graphite-rebalance.sh {{ ansible_ssh_host }} {{ nuevaconf.backup_file | quote }} >> /var/log/carbonate/graphite-rebalance.log
   become_user: carbon
   when: nuevaconf.backup_file is defined
   notify: borrar metricas incorrectas
