@@ -17,10 +17,17 @@
     backup=yes
   notify: reiniciar mysqld
 
+- name: Arrancando MySQLd
+  service:
+    name=mysqld
+    state=started
+    enabled=true
+
 - name: Contraseña de root
   mysql_user:
     name=root
     password={{ db_root_pass }}
+    priv=*.*:ALL,GRANT
 
 - name: Eliminando base de datos de test
   mysql_db:
