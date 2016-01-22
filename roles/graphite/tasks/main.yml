@@ -10,14 +10,14 @@
 
 - name: Copiando scripts de mantenimiento del cluster
   copy:
-    src={{ item }}
+    src=scripts/{{ item }}
     dest=/usr/bin/{{ item }}
     mode=0755
     owner=root
     group=root
   with_items:
-    - scripts/graphite-rebalance.sh
-    - scripts/graphite-sync.sh
+    - graphite-rebalance.sh
+    - graphite-sync.sh
 
 - name: Configurando usuario Carbon
   user:
